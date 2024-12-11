@@ -26,8 +26,11 @@ This keeps the active DynamoDB table lean with only current and upcoming entries
 - **parentTaskId (Number, optional, default: null)** *Reference to parent task if this is a subtask*
 - **title (String, required)** *Short task name/title for display*
 - **description (String, optional, default: "")** *Detailed task description and requirements*
-- **status (String, required, default: "pending") [pending, in_progress, completed, regular]** *Current state of task completion, regular for routine tasks*
-- **state_description (String, optional, default: "")** *Additional details for task state*
+- **status (String, required, default: "new") [new, in_progress, pending, completed, regular]** *Current state of task completion, regular for routine tasks*
+- **pendingReason (String, optional)** *Reason for pending status [waiting_for_task, waiting_for_recado, waiting_for_date, external]*
+- **pendingTargetId (String, optional)** *ID and entity type of the pending target task or recado in format entity#id*
+- **pendingDate (String, timestamp, optional)** *Target date when the pending status should be resolved*
+- **pendingDescription (String, optional)** *Detailed description of why the task is pending and what needs to be resolved*
 - **priority (String, required, default: "medium") [high, medium, low]** *Task importance level for sorting*
 - **hasSubtasks (Boolean, required, default: false)** *Indicates if task has child tasks*
 - **subtasksCount (Number, required, default: 0)** *Number of direct child tasks*

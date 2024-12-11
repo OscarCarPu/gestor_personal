@@ -1,12 +1,34 @@
 # UI Requirements
 
-### Main Layout
-1. **Split View Dashboard**
-   - Left side: Calendar view showing all events, tasks, and recados
-   - Right side: Projects list with quick access to active tasks
-   - Collapsible sidebar for navigation
+### Views Organization
+1. **Quick Access View (Default)**
+   - Priority Information Panel
+     - Upcoming events, tasks and recados (next 7 days)
+     - Tasks with high priority
+       - Compact list with status indicators
+       - Quick timer link button
+       - Priority level indicator
+   - Recent Activity Panel
+     - Recently tracked tasks
+       - Task title and project
+       - Last tracked time
+       - Quick access to timer
+       - Direct link to full task view
+     - Upcoming recados
+   - Quick Actions
+     - Start timer for recent tasks
+     - Create new task/event
+     - Mark pending tasks as resolved
+     - Quick status updates
 
-2. **Project Management View**
+2. **Calendar View**
+   - Month, week, and day views
+   - Color-coded events by type
+   - Task deadlines visualization
+   - Drag-and-drop event creation
+   - Quick event/task creation from calendar
+
+3. **Projects View**
    - List/Grid toggle for project display
    - Project cards showing:
      - Name and description
@@ -16,8 +38,8 @@
    - Quick filters for project status and tags
    - Search functionality
 
-3. **Task Management**
-   - Tree view for project tasks hierarchy
+4. **Tasks View**
+   - Tree view for task hierarchy
      - Expandable/collapsible task groups
      - Visual parent-child relationships
      - Drag-and-drop for task reordering
@@ -25,50 +47,50 @@
      - Priority (High to Low)
      - End date (Nearest first)
    - Status indicators with color coding
+   - Pending task management:
+     - Visual indicator for pending status and reason
+     - Quick link to related task/recado when pending
+     - Pending description display
+     - Target resolution date
 
-4. **Task Timer Feature**
+5. **Recados View**
+   - List of all recados
+   - Status and priority indicators
+   - Due date sorting
+   - Quick actions for common operations
+
+### Common Features Across Views
+1. **Navigation**
+   - Collapsible sidebar with view shortcuts
    - Persistent timer widget
      - Start/Stop button
      - Pause/Resume functionality
      - Current task indicator
      - Running time display
+
+2. **Search and Filters**
+   - Global search across all entities
+   - Advanced filtering options
+   - Saved searches/filters
+
+3. **Time Tracking**
    - Time entry history
    - Auto-save time entries
    - Manual time adjustment option
    - Quick task switching
    - Timer notifications/reminders
 
-5. **Calendar Integration**
-   - Month, week, and day views
-   - Color-coded events by type
-   - Task deadlines visualization
-   - Drag-and-drop event creation
-   - Quick event/task creation from calendar
+4. **Reports and Analytics**
+   - Time tracking summaries
+   - Project progress reports
+   - Task completion statistics
+   - Productivity analytics
 
-### UI Components
-1. **Navigation**
-   - Sidebar with main sections
-   - Quick access to active timers
-   - Recent projects/tasks
-
-2. **Project Cards**
-   - Status indicator
-   - Time tracking summary
-   - Quick actions menu
-   - Progress visualization
-
-3. **Task Items**
-   - Priority indicator
-   - Due date
-   - Time spent/remaining
-   - Quick timer controls
-   - Status toggle
-
-4. **Timer Widget**
-   - Always visible timer controls
-   - Task selection dropdown
-   - Time entry notes
-   - Break timer option
+5. **Notifications**
+   - Due date reminders
+   - Pending task resolution alerts
+   - Timer status notifications
+   - Calendar event reminders
 
 ### Technical Features
 - Offline time tracking
