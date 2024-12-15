@@ -1,41 +1,25 @@
 # Gestor Personal
 
-Aplicación para la gestión de proyectos, tareas y recados personales.
+Personal project and task management application for Android, Web, and Windows platforms.
 
-## Tecnologías
+## Documentation
 
-- Frontend multiplataforma (Android/Web/Windows)
-- Backend serverless con servicios AWS:
-  - AWS Amplify
-  - API Gateway
-  - AWS Lambda
-  - DynamoDB
+- [UI Requirements](docs/ui_requirements.md) - Application interface and user experience specifications
+- [Database Design](docs/db_design.md) - DynamoDB schema and data organization
+- [Application Flow](docs/app_flow.md) - Technical flows and interactions between components
+- [Technical Structure](docs/structure.md) - Technologies and tools used in the project
+- [Workflow](docs/workflow.md) - Application business logic and state management
+- [Notifications Flow](docs/notifications_flow.md) - Local notification system design
 
-## Estructura del Proyecto
+## Project Structure
 
 ```
 gestor_personal/
-├── frontend/     # Aplicación frontend multiplataforma
-├── backend/      # Funciones Lambda y APIs
-└── infrastructure/ # Configuración de infraestructura AWS
+├── frontend/     # Cross-platform application code
+├── backend/      # Lambda functions and APIs
+└── docs/         # Project documentation
 ```
 
-## Inicio Rápido
+## Getting Started
 
-### Requisitos previos
-
-### Instrucciones de configuración
-
-## Arquitectura
-
-La aplicación utiliza una arquitectura serverless con los siguientes componentes:
-
-- **Frontend**: Construido con AWS Amplify para compatibilidad multiplataforma
-- **Capa de API**: API Gateway para puntos de conexión RESTful
-- **Lógica**: AWS Lambda para funciones de backend
-- **Base de datos**: DynamoDB para almacenamiento de datos escalable
-- **Autenticación**: AWS Cognito para gestión de usuarios
-
-## Seguridad
-
-- Autenticación de usuarios con AWS Cognito
+See [UI Requirements](docs/ui_requirements.md) for application features and [Technical Structure](docs/structure.md) for development setup.
