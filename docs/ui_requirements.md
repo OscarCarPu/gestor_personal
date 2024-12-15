@@ -35,6 +35,10 @@
      - Progress indicators
      - Total time spent
      - Number of active tasks
+     - Project Timeline
+       - Milestone visualization
+       - Task completion trajectory
+       - Task due dates trajectory
    - Quick filters for project status and tags
    - Search functionality
 
