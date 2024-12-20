@@ -1,0 +1,122 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'CloudFormation template for Gestor Personal DynamoDB and S3 resources'
+
+Parameters:
+  Environment:
+    Type: String
+    Default: dev
+    AllowedValues:
+      - dev
+      - prod
+    Description: Environment name
+
+Resources:
+  GestorPersonalTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub gestor-personal-${Environment}
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: entity
+          AttributeType: S
+        - AttributeName: id
+          AttributeType: N
+      KeySchema:
+        - AttributeName: entity
+          KeyType: HASH
+        - AttributeName: id
+          KeyType: RANGE
+      TimeToLiveSpecification:
+        AttributeName: ttl
+        Enabled: true
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+
+  ArchiveBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub gestor-personal-archive-${Environment}-${AWS::AccountId}
+      LifecycleConfiguration:
+        Rules:
+          - Id: TransitionToInfrequentAccess
+            Status: Enabled
+            Transitions:
+              - StorageClass: STANDARD_IA
+                TransitionInDays: 90
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+
+  DynamoDBRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: DynamoDBAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:GetItem
+                  - dynamodb:PutItem
+                  - dynamodb:UpdateItem
+                  - dynamodb:DeleteItem
+                  - dynamodb:Query
+                  - dynamodb:Scan
+                Resource: !GetAtt GestorPersonalTable.Arn
+        - PolicyName: S3Access
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:PutObject
+                  - s3:GetObject
+                  - s3:ListBucket
+                Resource: 
+                  - !GetAtt ArchiveBucket.Arn
+                  - !Sub ${ArchiveBucket.Arn}/*
+
+Outputs:
+  TableName:
+    Description: Name of the DynamoDB table
+    Value: !Ref GestorPersonalTable
+    Export:
+      Name: !Sub ${AWS::StackName}-TableName
+
+  TableArn:
+    Description: ARN of the DynamoDB table
+    Value: !GetAtt GestorPersonalTable.Arn
+    Export:
+      Name: !Sub ${AWS::StackName}-TableArn
+
+  ArchiveBucketName:
+    Description: Name of the S3 archive bucket
+    Value: !Ref ArchiveBucket
+    Export:
+      Name: !Sub ${AWS::StackName}-ArchiveBucketName
+
+  DynamoDBRoleArn:
+    Description: ARN of the IAM role for DynamoDB access
+    Value: !GetAtt DynamoDBRole.Arn
+    Export:
+      Name: !Sub ${AWS::StackName}-DynamoDBRoleArn

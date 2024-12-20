@@ -71,6 +71,7 @@ This keeps the active DynamoDB table lean with only current and upcoming entries
 - **datetimeEnd (String, timestamp, required)** *End date and time*
 - **creationDate (String, timestamp, required, auto-generated)** *When calendar entry was created*
 - **updateDate (String, timestamp, required, auto-generated)** *Last modification timestamp*
+- **ttl (String, timestamp, required)** *When calendar entry should be deleted*
 
 #### TaskTime Entity (PK: "tasktime")
 - **SK: id** *Auto-incrementing time entry identifier*
