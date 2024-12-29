@@ -17,9 +17,15 @@ Personal project and task management application for Android, Web, and Windows p
 gestor_personal/
 ├── frontend/     # Cross-platform application code
 ├── backend/      # Lambda functions and APIs
-└── docs/         # Project documentation
+├── docs/         # Project documentation
+├── deploy/       # Production deployment scripts
+└── tests/        # Testing environment and test suites
 ```
 
 ## Getting Started
-
+    
 See [UI Requirements](docs/ui_requirements.md) for application features and [Technical Structure](docs/structure.md) for development setup.
+
+## Testing
+
+The project includes comprehensive test suites in the `tests` directory. See [tests/README.md](tests/README.md) for setup and execution instructions.

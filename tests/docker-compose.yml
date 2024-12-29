@@ -4,21 +4,17 @@ services:
     image: localstack/localstack:latest
     ports:
       - "4566:4566"         
-      - "4510-4559:4510-4559" 
     environment:
-      - SERVICES=dynamodb,s3,cloudformation,iam,lambda,apigateway
-      - DEBUG=1
-      - DOCKER_HOST=unix:///var/run/docker.sock
-      - AWS_DEFAULT_REGION=us-east-1
+      - SERVICES=dynamodb,s3,lambda,apigateway,cloudformation,iam
+      - AWS_DEFAULT_REGION=eu-south-2
       - AWS_ACCESS_KEY_ID=test
       - AWS_SECRET_ACCESS_KEY=test
       - LAMBDA_EXECUTOR=docker
-      - LAMBDA_REMOTE_DOCKER=false
       - DOCKER_HOST=unix:///var/run/docker.sock
     volumes:
       - localstack_volume:/var/lib/localstack
+      - "../backend:/backend"
       - "/var/run/docker.sock:/var/run/docker.sock"
-      - ".k/backend:/backend"
 
 volumes:
   localstack_volume:

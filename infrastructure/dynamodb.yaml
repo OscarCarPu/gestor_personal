@@ -36,14 +36,7 @@ Resources:
   ArchiveBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Sub gestor-personal-archive-${Environment}-${AWS::AccountId}
-      LifecycleConfiguration:
-        Rules:
-          - Id: TransitionToInfrequentAccess
-            Status: Enabled
-            Transitions:
-              - StorageClass: STANDARD_IA
-                TransitionInDays: 90
+      BucketName: !Sub gestor-personal-${Environment}-${AWS::AccountId}
       BucketEncryption:
         ServerSideEncryptionConfiguration:
           - ServerSideEncryptionByDefault:
@@ -109,11 +102,11 @@ Outputs:
     Export:
       Name: !Sub ${AWS::StackName}-TableArn
 
-  ArchiveBucketName:
+  BucketName:
     Description: Name of the S3 archive bucket
     Value: !Ref ArchiveBucket
     Export:
-      Name: !Sub ${AWS::StackName}-ArchiveBucketName
+      Name: !Sub ${AWS::StackName}-BucketName
 
   DynamoDBRoleArn:
     Description: ARN of the IAM role for DynamoDB access

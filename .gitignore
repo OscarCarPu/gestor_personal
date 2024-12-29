@@ -1,2 +1,6 @@
 .env
 volume
+.venv
+.aws-sam
+.pytest_cache
+__pycache__

@@ -1,0 +1,59 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Parameters:
+  Environment:
+    Type: String
+    Default: dev
+    AllowedValues:
+      - dev
+      - prod
+    Description: Environment name
+  UserPoolArn:
+    Type: String
+    Description: Cognito User Pool ARN
+  DynamoDBUrl:
+    Type: String
+    Description: DynamoDB endpoint URL
+    Default: http://dynamodb.eu-south-2.amazonaws.com
+  S3BucketName:
+    Type: String
+    Description: Name of the S3 bucket
+
+Resources:
+  HelloFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub "hello-function-${Environment}"
+      CodeUri: ../backend/src
+      Handler: hello.handler
+      Runtime: nodejs18.x
+      Environment:
+        Variables:
+          DYNAMODB_ENDPOINT: !Ref DynamoDBUrl
+          S3_BUCKET_NAME: !Ref S3BucketName
+      Events:
+        HelloApi:
+          Type: Api
+          Properties:
+            Path: /hello
+            Method: get
+            RestApiId: !Ref GestorPersonalApi
+            Auth:
+              Authorizer: CognitoAuthorizer
+
+  GestorPersonalApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: !Ref Environment
+      Cors: "'*'"
+      Auth:
+        DefaultAuthorizer: CognitoAuthorizer
+        Authorizers:
+          CognitoAuthorizer:
+            UserPoolArn: !Ref UserPoolArn
+
+Outputs:
+  HelloApi:
+    Description: API Gateway endpoint URL for the environment stage
+    Value: !Sub "https://${GestorPersonalApi}.execute-api.${AWS::Region}.amazonaws.com/${Environment}/hello"

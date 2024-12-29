@@ -15,10 +15,6 @@ Resources:
     Type: AWS::Cognito::UserPool
     Properties:
       UserPoolName: !Sub gestor-personal-users-${Environment}
-      AutoVerifiedAttributes:
-        - email
-      UsernameAttributes:
-        - email
       Policies:
         PasswordPolicy:
           MinimumLength: 8
@@ -27,16 +23,10 @@ Resources:
           RequireSymbols: true
           RequireUppercase: true
       Schema:
-        - Name: email
-          AttributeDataType: String
-          Mutable: true
-          Required: true
         - Name: name
           AttributeDataType: String
           Mutable: true
           Required: true
-      EmailVerificationMessage: 'Your verification code is {####}'
-      EmailVerificationSubject: 'Verify your email for Gestor Personal'
       
   UserPoolClient:
     Type: AWS::Cognito::UserPoolClient
@@ -51,32 +41,25 @@ Resources:
       PreventUserExistenceErrors: ENABLED
       SupportedIdentityProviders:
         - COGNITO
-      CallbackURLs:
-        - http://localhost:5173 # Svelte dev server default port
-        - http://localhost:4173 # Svelte preview server default port
-      LogoutURLs:
-        - http://localhost:5173
-        - http://localhost:4173
-      AllowedOAuthFlows:
-        - implicit
-      AllowedOAuthScopes:
-        - email
-        - openid
-        - profile
-      AllowedOAuthFlowsUserPoolClient: true
 
 Outputs:
   UserPoolId:
-    Description: ID of the User Pool
+    Description: ID of the Cognito User Pool
     Value: !Ref UserPool
     Export:
-      Name: !Sub ${AWS::StackName}-UserPoolId
+      Name: GestorPersonalUserPoolId
+
+  UserPoolArn:
+    Description: ARN of the Cognito User Pool
+    Value: !GetAtt UserPool.Arn
+    Export:
+      Name: GestorPersonalUserPoolArn
 
   UserPoolClientId:
-    Description: ID of the User Pool Client
+    Description: ID of the Cognito User Pool Client
     Value: !Ref UserPoolClient
     Export:
-      Name: !Sub ${AWS::StackName}-UserPoolClientId
+      Name: GestorPersonalUserPoolClientId
 
   UserPoolDomain:
     Description: Cognito User Pool Domain
